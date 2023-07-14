@@ -10,7 +10,9 @@ describe('App', () => {
 
   const shortenUrl = async (original: string) => {
    urls = [...urls, original];
-   return `http://localhost:3333/${urls.length}`;
+   const short = `http://localhost:3333/${urls.length}`;
+   const qrCode = "mockQRCodeData";
+   return { short, qrCode };
   };
 
   const lookupUrl = async (shortId: number) => {
@@ -29,6 +31,7 @@ it('should store shortened urls', async () => {
  .post('/api/shorten')
  .send({ original: original })
  expect(response.status).toEqual(201);
+ expect(response.body.qrCode).toEqual("mockQRCodeData");
  expect(urls).toContain(original);
 });
 });
